@@ -1,0 +1,32 @@
+module Samurai
+  class Ability
+
+    include CanCan::Ability
+    
+    class_attribute :abilities
+    self.abilities = Set.new
+
+    def self.register_ability(ability)
+      self.abilities.add(ability)
+    end
+
+    def self.remove_ability(ability)
+      self.abilities.delete(ability)
+    end
+      
+    def initialize(user)
+      if user.admin?
+        can :manage, :all
+      else
+        can :read, :all
+      end
+
+      Ability.abilities.each do |klass|
+        ability = klass.send(:new, user)
+        @rules = rules + ability.send(:rules)
+      end  
+    end
+  
+  end
+end
+  

@@ -1,0 +1,14 @@
+<ul class="nav nav-pills navbar-right">
+    <li role="presentation" class="<%= active(samurai.admin_path) %>">
+        <%= link_to 'Dashboard', samurai.admin_path %>
+    </li>
+    <li role="presentation" class="<%= active(samurai.admin_users_path) %>">
+        <%= link_to samurai.admin_users_path do %>
+            Users
+            <span class="badge"><%= Samurai::User.count %></span>
+        <% end %>
+    </li>
+    <span data-samurai-hook='admin_nav'></span>
+</ul>
+
+<div class='clearfix'></div>
